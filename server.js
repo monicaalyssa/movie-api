@@ -4,6 +4,7 @@ url = require('url'),
 fs = require('fs');
 
 // createserver callback func to parse the requested documentation url
+/* 
 http.createServer((request, response) => {
 let addr = request.url
 q = new URL(addr, 'http://' + request.headers.host), // url is set to the q variable
@@ -39,3 +40,4 @@ if (err) {
 // listens for requests on port 8080 from http module import
 }).listen(8080);
 console.log('My first Node test server is running on Port 8080.');
+*/

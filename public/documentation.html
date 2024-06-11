@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
         <title>
             Movie API
         </title>
@@ -12,5 +13,116 @@
             application will provide users with access to information about different
             movies, directors, and genres. Users will be able to sign up, update their
             personal information, and create a list of their favorite movies.</p>
-    </body>
+
+            <table>
+                <tr>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Business Logic</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+            </tr>
+
+<!------------------------------------------------------------------------------------------------------------------->
+
+            <tr>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>Gets a list of movies</td>
+                <td>None</td>
+                <td>A JSON object holding data about all the movies</td>
+            </tr>
+
+<!------------------------------------------------------------------------------------------------------------------->
+
+            <tr>
+              <td>/movies/[moviename]</td>
+                <td>GET</td>
+                <td>Get data about a single movie by name</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single movie containing the name, genre, description, director, image URL, and whether it's featured 
+                    <br><span class="code-bkg">
+                        <span class="purplebrackets">{</span>
+                            "Title": "Avatar",
+                            "Genre": <span class="bluebrackets">{</span>
+                              "Name": "Action",
+                              "Description":
+                                "Action focuses on the protagonist's sacrifice for..."
+                            <span class="bluebrackets">}</span>,
+                            "Description": "A paraplegic Marine dispatched to...",
+                            "Director": <span class="bluebrackets">{</span>
+                              "Name": "James Cameron",
+                              "Bio": "James Cameron is a Canadian filmmaker...",
+                              "Birth Year": "1954",
+                              "Death Year": "N/A"
+                            <span class="bluebrackets">}</span>,
+                            "ImageURL": "https://example.com",
+                            "Featured": true
+                            <span class="purplebrackets">}</span>
+                </span>
+                </td>
+            </tr>
+
+<!------------------------------------------------------------------------------------------------------------------->
+
+            <tr>
+                <td>/movies/[Genre]</td>
+                <td>GET</td>
+                <td>Get data about a genre</td>
+                <td>None</td>
+                <td>A JSON object holding data about a genre containing a description 
+                    <br><span class="code-bkg">
+                            "Genre": <span class="bluebrackets">{</span>
+                              "Name": "Action",
+                              "Description":
+                                "Action focuses on the protagonist's sacrifice for..."
+                            <span class="bluebrackets">}</span>
+                </span></td>
+            </tr>
+
+<!------------------------------------------------------------------------------------------------------------------->
+            
+            <tr>
+                <td>/movies/[Director]</td>
+                <td>GET</td>
+                <td>Get data about a director</td>
+                <td>None</td>
+                <td>A JSON object holding data about a director containing their bio, birth year, and death year
+                    <br><span class="code-bkg">
+                        "Director": <span class="bluebrackets">{</span>
+                            "Name": "James Cameron",
+                            "Bio": "James Cameron is a Canadian filmmaker...",
+                            "Birth Year": "1954",
+                            "Death Year": "N/A"
+                        <span class="bluebrackets">}</span>
+            </span></td>
+            </tr>
+
+            <!-- 
+            <tr>
+                <td>/movies</td>
+                <td>POST</td>
+                <td>Adds a movie</td>
+                <td>data
+                </td>
+                <td>data
+                </td>
+            </tr>
+
+            
+                <tr>
+<td>allow new users to register, allow users to update their user info (username), allow users to add a movie to list of favs (show only txt that movie has been added), allow
+    user to remove from favs, allow users to deregister
+</td>
+<td>data</td>
+<td>data</td>
+
+
+                </tr>
+
+                
+            -->       
+            
+            </table>
+        </body>
 </html>

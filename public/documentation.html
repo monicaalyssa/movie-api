@@ -1,128 +1,178 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="/styles.css">
-        <title>
-            Movie API
-        </title>
-    </head>
-    <body>
-        <h1>Movie API Documentation</h1>
-        <p>The web
-            application will provide users with access to information about different
-            movies, directors, and genres. Users will be able to sign up, update their
-            personal information, and create a list of their favorite movies.</p>
 
-            <table>
-                <tr>
-                <th>URL</th>
-                <th>HTTP Method</th>
-                <th>Business Logic</th>
-                <th>Request body data format</th>
-                <th>Response body data format</th>
-            </tr>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>
+        Movie API
+    </title>
+</head>
 
-<!------------------------------------------------------------------------------------------------------------------->
+<body>
+    <h1>Movie API Documentation</h1>
+    <p>The web
+        application will provide users with access to information about different
+        movies, directors, and genres. Users will be able to sign up, update their
+        personal information, and create a list of their favorite movies.</p>
 
-            <tr>
-                <td>/movies</td>
-                <td>GET</td>
-                <td>Gets a list of movies</td>
-                <td>None</td>
-                <td>A JSON object holding data about all the movies</td>
-            </tr>
+    <table>
+        <tr>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Business Logic</th>
+            <th>Request body data format</th>
+            <th>Response body data format</th>
+        </tr>
 
-<!------------------------------------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------->
 
-            <tr>
-              <td>/movies/[moviename]</td>
-                <td>GET</td>
-                <td>Get data about a single movie by name</td>
-                <td>None</td>
-                <td>A JSON object holding data about a single movie containing the name, genre, description, director, image URL, and whether it's featured 
-                    <br><span class="code-bkg">
-                        <span class="purplebrackets">{</span>
-                            "Title": "Avatar",
-                            "Genre": <span class="bluebrackets">{</span>
-                              "Name": "Action",
-                              "Description":
-                                "Action focuses on the protagonist's sacrifice for..."
-                            <span class="bluebrackets">}</span>,
-                            "Description": "A paraplegic Marine dispatched to...",
-                            "Director": <span class="bluebrackets">{</span>
-                              "Name": "James Cameron",
-                              "Bio": "James Cameron is a Canadian filmmaker...",
-                              "Birth Year": "1954",
-                              "Death Year": "N/A"
-                            <span class="bluebrackets">}</span>,
-                            "ImageURL": "https://example.com",
-                            "Featured": true
-                            <span class="purplebrackets">}</span>
+        <tr>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>Gets a list of movies</td>
+            <td>None</td>
+            <td>A JSON object holding data about all the movies</td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/movies/[moviename]</td>
+            <td>GET</td>
+            <td>Get data about a single movie by name</td>
+            <td>None</td>
+            <td>A JSON object holding data about a single movie containing the name, genre, description, director, image
+                URL, and whether it's featured
+                <br><span class="code-bkg">
+                    <span class="purplebrackets">{</span>
+                    "Title": "Avatar",
+                    "Genre": <span class="bluebrackets">{</span>
+                    "Name": "Action",
+                    "Description":
+                    "Action focuses on the protagonist's sacrifice for..."
+                    <span class="bluebrackets">}</span>,
+                    "Description": "A paraplegic Marine dispatched to...",
+                    "Director": <span class="bluebrackets">{</span>
+                    "Name": "James Cameron",
+                    "Bio": "James Cameron is a Canadian filmmaker...",
+                    "Birth Year": "1954",
+                    "Death Year": "N/A"
+                    <span class="bluebrackets">}</span>,
+                    "ImageURL": "https://example.com",
+                    "Featured": true
+                    <span class="purplebrackets">}</span>
                 </span>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
-<!------------------------------------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------->
 
-            <tr>
-                <td>/movies/[Genre]</td>
-                <td>GET</td>
-                <td>Get data about a genre</td>
-                <td>None</td>
-                <td>A JSON object holding data about a genre containing a description 
-                    <br><span class="code-bkg">
-                            "Genre": <span class="bluebrackets">{</span>
-                              "Name": "Action",
-                              "Description":
-                                "Action focuses on the protagonist's sacrifice for..."
-                            <span class="bluebrackets">}</span>
-                </span></td>
-            </tr>
+        <tr>
+            <td>/movies/[Genre]</td>
+            <td>GET</td>
+            <td>Get data about a genre</td>
+            <td>None</td>
+            <td>A JSON object holding data about a genre containing a description
+                <br><span class="code-bkg">
+                    "Genre": <span class="bluebrackets">{</span>
+                    "Name": "Action",
+                    "Description":
+                    "Action focuses on the protagonist's sacrifice for..."
+                    <span class="bluebrackets">}</span>
+                </span>
+            </td>
+        </tr>
 
-<!------------------------------------------------------------------------------------------------------------------->
-            
-            <tr>
-                <td>/movies/[Director]</td>
-                <td>GET</td>
-                <td>Get data about a director</td>
-                <td>None</td>
-                <td>A JSON object holding data about a director containing their bio, birth year, and death year
-                    <br><span class="code-bkg">
-                        "Director": <span class="bluebrackets">{</span>
-                            "Name": "James Cameron",
-                            "Bio": "James Cameron is a Canadian filmmaker...",
-                            "Birth Year": "1954",
-                            "Death Year": "N/A"
-                        <span class="bluebrackets">}</span>
-            </span></td>
-            </tr>
+        <!------------------------------------------------------------------------------------------------->
 
-            <!-- 
-            <tr>
-                <td>/movies</td>
-                <td>POST</td>
-                <td>Adds a movie</td>
-                <td>data
-                </td>
-                <td>data
-                </td>
-            </tr>
-
-            
-                <tr>
-<td>allow new users to register, allow users to update their user info (username), allow users to add a movie to list of favs (show only txt that movie has been added), allow
-    user to remove from favs, allow users to deregister
-</td>
-<td>data</td>
-<td>data</td>
+        <tr>
+            <td>/movies/[Director]</td>
+            <td>GET</td>
+            <td>Get data about a director</td>
+            <td>None</td>
+            <td>A JSON object holding data about a director containing their bio, birth year, and death year
+                <br><span class="code-bkg">
+                    "Director": <span class="bluebrackets">{</span>
+                    "Name": "James Cameron",
+                    "Bio": "James Cameron is a Canadian filmmaker...",
+                    "Birth Year": "1954",
+                    "Death Year": "N/A"
+                    <span class="bluebrackets">}</span>
+                </span>
+            </td>
+        </tr>
 
 
-                </tr>
+        <!------------------------------------------------------------------------------------------------->
 
-                
-            -->       
-            
-            </table>
-        </body>
+        <tr>
+            <td>/users</td>
+            <td>POST</td>
+            <td>Adds a new user</td>
+            <td>A JSON object holding data about a user to add
+                <br><span class="code-bkg">
+                    <span class="bluebrackets">{</span>
+                    "name": "Mary",
+                    "favoriteMovies": []
+                    <span class="bluebrackets">}</span>
+            </td>
+            <td>A JSON object holding data about the user that was added, including an ID
+                <br><span class="code-bkg">
+                    <span class="bluebrackets">{</span>
+                    "name": "Mary",
+                    "favoriteMovies": [],
+                    "id": 1
+                    <span class="bluebrackets">}</span>
+            </td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/users/[id]</td>
+            <td>PUT</td>
+            <td>Updates an existing users username</td>
+            <td> A JSON object holding data about the name the user wants to update
+                <br><span class="code-bkg">
+                    <span class="bluebrackets">{</span>
+                    "name": "Mary"
+                    <span class="bluebrackets">}</span>
+            </td>
+            <td>A text message indicating whether or not the users username was updated</td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/users/[id]/[moviename]</td>
+            <td>POST</td>
+            <td>Adds a movie to users favorite movies list</td>
+            <td>None</td>
+            <td>A text message indicating whether the movie was successfully added to the users favorites list</td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/users/[id]/[moviename]</td>
+            <td>DELETE</td>
+            <td>Deletes a movie from users favorite movies list</td>
+            <td>None</td>
+            <td>A text message indicating whether the movie was successfully delete from the users favorites list</td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/users/[id]</td>
+            <td>DELETE</td>
+            <td>Deletes an existing user</td>
+            <td>None</td>
+            <td>A text message indicating whether the user was successfully deleted</td>
+        </tr>
+
+    </table>
+</body>
+
 </html>

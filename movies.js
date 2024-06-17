@@ -1,26 +1,4 @@
-// variable declaration
-const bodyParser = require("body-parser");
-const express = require("express"),
-  path = require("path"),
-  fs = require("fs"),
-  morgan = require("morgan"),
-  uuid = require('uuid');
-
-const mongoose = require('mongoose'),
-  Models = require('./models.js');
-
-const app = express();
-const Movies = Models.Movie;
-const Users = Models.User;
-
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
-
-// creates a writable stream (data is written into a file, in this case log.txt) using the fs module
-const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
-  flags: "a",
-}); // the a flag opens the file for writing & positions the stream at the end of the file
-
-let movies = [
+let movieDB = [
   {
     Title: "Missing 411: The UFO Connection",
     Genre: {
@@ -112,7 +90,7 @@ let movies = [
   },
   {
     Title: "Leave the World Behind",
-    Genre: { Name: "", Description: "" },
+    Genre: { Name: "Mystery", Description: "Mystery involves a mysterious death or a crime to be solved." },
     Description:
       "A family's getaway to a luxurious rental home takes an ominous turn when a cyberattack knocks out their devices, and two strangers appear at their door.",
     Director: {
@@ -197,77 +175,3 @@ let movies = [
     Featured: false
   }
 ];
-
-// lines for body-parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// sets up the logger using morgan to log "combined" (specific data that will be logged) into the accessLogStream
-app.use(morgan("combined", { stream: accessLogStream }));
-
-// takes specific pathname "/" requests from the user and uses express to route them to any file located in the public folder
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/documentation.html"));
-});
-
-
-app.post('/users', async (req, res) => { // adds a new user
-  await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists 
-  .then((user) => {
-    if (user) { // if the user does exist then it lets the client know it already exists
-      return res.status(400).send(req.body.Username + 'already exists');
-    } else { // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
-      Users
-      .create({
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      })
-      .then((user) => {res.status(201).json(user) }) /* after the document is create a callback fun takes the document as a parameter, 
-      sending back a response to the client containing a status code and the document called "user" */
-      .catch((error) => { // error func in case your command runs an error
-        console.log(error);
-        res.status(500).send('Error' + error);
-      })
-    }
-  })
-  .catch ((error) => { 
-    console.log(error);
-    res.status(500).send('Error' + error);
-  });
-});
-
-app.get('/users', async (req, res) => {
-  await Users.find()
-    .then((users) => {
-      res.status(201).json(users);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
-
-app.get('/users/:Username', async (req, res) => { // gets a user by username
-  await Users.findOne({ Username: req.params.Username })
-    .then((user) => {
-      res.json(user);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
-
-// catches any errors regarding "res" responses to the user
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Webpage not fonud");
-});
-
-app.listen(8081, () => {
-  console.log("My first Node test server is running on Port 8081");
-});

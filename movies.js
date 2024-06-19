@@ -90,7 +90,11 @@ let movieDB = [
   },
   {
     Title: "Leave the World Behind",
-    Genre: { Name: "Mystery", Description: "Mystery involves a mysterious death or a crime to be solved." },
+    Genre: {
+      Name: "Mystery",
+      Description:
+        "Mystery involves a mysterious death or a crime to be solved."
+    },
     Description:
       "A family's getaway to a luxurious rental home takes an ominous turn when a cyberattack knocks out their devices, and two strangers appear at their door.",
     Director: {

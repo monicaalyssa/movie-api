@@ -381,3 +381,8 @@
 ::1 - - [17/Jun/2024:17:39:51 +0000] "POST /users HTTP/1.1" 201 168 "-" "PostmanRuntime/7.39.0"
 ::1 - - [17/Jun/2024:17:42:19 +0000] "GET / HTTP/1.1" 200 6816 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 ::1 - - [17/Jun/2024:17:42:19 +0000] "GET /styles.css HTTP/1.1" 304 - "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+::1 - - [17/Jun/2024:20:19:05 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+::1 - - [17/Jun/2024:20:19:05 +0000] "GET /styles.css HTTP/1.1" 304 - "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+::1 - - [17/Jun/2024:20:38:12 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+::1 - - [17/Jun/2024:20:38:12 +0000] "GET /styles.css HTTP/1.1" 304 - "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+::1 - - [19/Jun/2024:00:01:56 +0000] "GET /users/user1 HTTP/1.1" 200 237 "-" "PostmanRuntime/7.39.0"

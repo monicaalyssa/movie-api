@@ -4,20 +4,22 @@ const express = require("express"),
   path = require("path"),
   fs = require("fs"),
   morgan = require("morgan"),
-  uuid = require('uuid');
-
-const mongoose = require('mongoose'),
-  Models = require('./models.js');
+  uuid = require("uuid"),
+  mongoose = require("mongoose"),
+  Models = require("./models.js");
 
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/test", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // creates a writable stream (data is written into a file, in this case log.txt) using the fs module
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
-  flags: "a",
+  flags: "a"
 }); // the a flag opens the file for writing & positions the stream at the end of the file
 
 let movies = [
@@ -112,7 +114,7 @@ let movies = [
   },
   {
     Title: "Leave the World Behind",
-    Genre: { Name: "", Description: "" },
+    Genre: { Name: "Mystery", Description: "Mystery involves a mysterious death or a crime to be solved." },
     Description:
       "A family's getaway to a luxurious rental home takes an ominous turn when a cyberattack knocks out their devices, and two strangers appear at their door.",
     Director: {
@@ -212,55 +214,109 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/documentation.html"));
 });
 
-
-app.post('/users', async (req, res) => { // adds a new user
-  await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists 
-  .then((user) => {
-    if (user) { // if the user does exist then it lets the client know it already exists
-      return res.status(400).send(req.body.Username + 'already exists');
-    } else { // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
-      Users
-      .create({
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      })
-      .then((user) => {res.status(201).json(user) }) /* after the document is create a callback fun takes the document as a parameter, 
+app.post("/users", async (req, res) => {
+  // adds a new user
+  await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists
+    .then((user) => {
+      if (user) {
+        // if the user does exist then it lets the client know it already exists
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
+        Users.create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+          .then((user) => {
+            res.status(201).json(user);
+          }) /* after the document is create a callback fun takes the document as a parameter, 
       sending back a response to the client containing a status code and the document called "user" */
-      .catch((error) => { // error func in case your command runs an error
-        console.log(error);
-        res.status(500).send('Error' + error);
-      })
-    }
-  })
-  .catch ((error) => { 
-    console.log(error);
-    res.status(500).send('Error' + error);
-  });
+          .catch((error) => {
+            // error func in case your command runs an error
+            console.log(error);
+            res.status(500).send("Error" + error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("Error" + error);
+    });
 });
 
-app.get('/users', async (req, res) => {
+app.get("/users", async (req, res) => { // gets all the users
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send('Error: ' + err);
+      res.status(500).send("Error: " + err);
     });
 });
 
-app.get('/users/:Username', async (req, res) => { // gets a user by username
+app.get("/users/:Username", async (req, res) => { // gets a user by username
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send('Error: ' + err);
+      res.status(500).send("Error: " + err);
     });
 });
+
+app.put("users/:Username", async (req, res) => { // updates all users with a certain username
+  await Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
+    { /* $set specifies which fields in the user document you're updating, the new values are extracted
+      from the reqest body */
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  }, 
+{ new: true }) /* this line makes sure the updated document is returned, it specifies that 
+in the proceeding callback you want the document that was just udpated to be  */
+.then((updatedUser) => { // the then() method accepts the returned document
+  res.json(updatedUser); // sends the document as a JSON response to the client
+})
+.catch((err) => {
+  console.log(err);
+  res.status(500).send('Error:' + err);
+})
+});
+
+app.post("users/:Username/movies/:MovieID", async (req, res) => { // adds a movie to a user's list of favorites
+  await Users.findOneAndUpdate ({ Username: req.params.Username }, { 
+    $push: { FavoriteMovies: req.params.MovieID } // $push is used to add a new movie ID to the end of the array
+  },
+{ new: true })
+.then((updatedUser) => {
+  res.json(updatedUser);
+})
+.catch((err) => {
+  console.log(err);
+  res.status(500).send('Error: ' + err);
+})
+})
+
+app.delete("users/:Username", async (req, res) => { // deletes a user by username
+  await Users.findOneAndRemove ({ Username: req.params.Username })
+  .then ((user) => {
+    if (!user) {
+      res.status(400).send(req.params.Username + ' was not found');
+    } else {
+      res.status(200).send(req.params.Username + 'has been deleted');
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send('Error: ' + err);
+  })
+})
 
 // catches any errors regarding "res" responses to the user
 app.use((err, req, res, next) => {

@@ -44,7 +44,7 @@
             <td>Get data about a single movie by name</td>
             <td>None</td>
             <td>A JSON object holding data about a single movie containing the name, genre, description, director, image
-                URL, and whether it's featured
+                URL, id, and whether it's featured
                 <br><span class="code-bkg">
                     <span class="purplebrackets">{</span>
                     "Title": "Avatar",
@@ -57,11 +57,12 @@
                     "Director": <span class="bluebrackets">{</span>
                     "Name": "James Cameron",
                     "Bio": "James Cameron is a Canadian filmmaker...",
-                    "Birth Year": "1954",
-                    "Death Year": "N/A"
+                    "Birthdate": "1954-08-16",
+                    "Deathdate": "N/A"
                     <span class="bluebrackets">}</span>,
                     "ImageURL": "https://example.com",
-                    "Featured": true
+                    "Featured": true,
+                    "_id": "666f4b482ea46717e439e60b"
                     <span class="purplebrackets">}</span>
                 </span>
             </td>
@@ -97,8 +98,8 @@
                     "Director": <span class="bluebrackets">{</span>
                     "Name": "James Cameron",
                     "Bio": "James Cameron is a Canadian filmmaker...",
-                    "Birth Year": "1954",
-                    "Death Year": "N/A"
+                    "Birthdate": "1954",
+                    "Deathyear": "N/A"
                     <span class="bluebrackets">}</span>
                 </span>
             </td>
@@ -114,16 +115,22 @@
             <td>A JSON object holding data about a user to add
                 <br><span class="code-bkg">
                     <span class="bluebrackets">{</span>
-                    "name": "Mary",
-                    "favoriteMovies": []
+                    "Username": "Mary99",
+                    "Password": "Password99",
+                    "Email": "mary99@exmaple.com",
+                    "Birthday": "03/20/97",
+                    "Favorites": []
                     <span class="bluebrackets">}</span>
             </td>
             <td>A JSON object holding data about the user that was added, including an ID
                 <br><span class="code-bkg">
                     <span class="bluebrackets">{</span>
                     "name": "Mary",
-                    "favoriteMovies": [],
-                    "id": 1
+                    "Password": "Password99",
+                    "Email": "mary99@exmaple.com",
+                    "Birthday": "1997-03-20T05:00:00.000Z",
+                    "Favorites": [],
+                    "_id": "6672be6a37ed3c0a5478159b"
                     <span class="bluebrackets">}</span>
             </td>
         </tr>
@@ -131,22 +138,23 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/users/[id]</td>
+            <td>/users/[username]</td>
             <td>PUT</td>
             <td>Updates an existing users username</td>
-            <td> A JSON object holding data about the name the user wants to update
+            <td> A JSON object holding data about the name, password, email, or birthday the user wants to update
                 <br><span class="code-bkg">
                     <span class="bluebrackets">{</span>
-                    "name": "Mary"
+                    "Username": "Mary100",
+                    "Password": "updatedpassword100"
                     <span class="bluebrackets">}</span>
             </td>
-            <td>A text message indicating whether or not the users username was updated</td>
+            <td>A text message indicating whether or not the users account was updated</td>
         </tr>
 
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/users/[id]/[moviename]</td>
+            <td>/users/[username]/movies/[movieid]</td>
             <td>POST</td>
             <td>Adds a movie to users favorite movies list</td>
             <td>None</td>
@@ -156,7 +164,7 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/users/[id]/[moviename]</td>
+            <td>/users/[username]/movies/[movieid]</td>
             <td>DELETE</td>
             <td>Deletes a movie from users favorite movies list</td>
             <td>None</td>
@@ -166,7 +174,7 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/users/[id]</td>
+            <td>/users/[username]</td>
             <td>DELETE</td>
             <td>Deletes an existing user</td>
             <td>None</td>

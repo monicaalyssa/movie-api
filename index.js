@@ -208,6 +208,13 @@ let movies = [
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// imports auth.js 
+let auth = require("./auth")(app);
+
+// imports passport.js
+const passport = require('passport');
+require("./passport");
+
 // sets up the logger using morgan to log "combined" (specific data that will be logged) into the accessLogStream
 app.use(morgan("combined", { stream: accessLogStream }));
 

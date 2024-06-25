@@ -238,7 +238,7 @@ app.get("/movies", (req, res) => {
 });
 
 // gets a specific movie
-app.get("/movies/:Title", (req, res) => {
+app.get("/movies/:Title",(req, res) => {
   Movies.findOne({ Title: req.params.Title })
     .then((movie) => {
       if (movie) {
@@ -286,19 +286,19 @@ app.get("/directors/:Director", (req, res) => {
 });
 
 // gets all the users
-app.get("/users", async (req, res) => {
-  await Users.find()
+app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.find({}, { _id: 0, Username: 1, Favorites: 1 }) /* {} fetches all users, and _id: 0 exludes the id from the res,
+  and using the number 1 includes any of the related fields */
     .then((users) => {
-      res.status(201).json(users);
+      res.status(200).json(users);
     })
     .catch((err) => {
-      console.error(err);
       res.status(500).send("Error: " + err);
     });
 });
 
 // gets a user by username
-app.get("/users/:Username", async (req, res) => {
+app.get("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
@@ -315,7 +315,7 @@ app.post("/users", async (req, res) => {
     .then((user) => {
       if (user) {
         // if the user does exist then it lets the client know it already exists
-        return res.status(400).send(req.body.Username + "already exists");
+        return res.status(400).send(req.body.Username + " already exists");
       } else {
         // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
         Users.create({
@@ -342,9 +342,14 @@ app.post("/users", async (req, res) => {
 });
 
 // updates a user with a certain username
-app.put("/users/:Username", async (req, res) => {
-  await Users.findOneAndUpdate(
-    { Username: req.params.Username },
+app.put("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  /* condition to checek the username in the request body matches the one in the parameter
+  so users can ONLY update their information and not others */
+  if(req.user.Username !== req.params.Username) { // req.user.Username is the username extracted from the JWT payload
+    return res.status(400).send("Permission denied");
+  }
+
+  await Users.findOneAndUpdate({ Username: req.params.Username },
     {
       $set: {
         /* $set specifies which fields in the user document you're updating, the new values are 
@@ -373,7 +378,11 @@ in the proceeding callback you want the document that was just udpated */
 });
 
 // adds a movie to a user's list of favorites
-app.post("/users/:Username/movies/:MovieID", async (req, res) => {
+app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if(req.user.Username !== req.params.Username) {
+    return res.status(400).send("Permission denied");
+  }
+
   try {
     const favMovie = await Movies.findById(req.params.MovieID);
     if (!favMovie) {
@@ -405,7 +414,11 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
 });
 
 // delete a movie from users favorites
-app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
+app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if(req.user.Username !== req.params.Username) {
+    return res.status(400).send("Permission denied");
+  }
+  
   try {
     // check if the movie exists, if it does assign it to a variable
     const favMovie = await Movies.findById(req.params.MovieID);
@@ -441,7 +454,11 @@ app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
 });
 
 // deletes a user by username
-app.delete("/users/:Username", async (req, res) => {
+app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if(req.user.Username !== req.params.Username) {
+    return res.status(400).send("Permission denied");
+  }
+
   await Users.findOneAndDelete({ Username: req.params.Username })
     .then((user) => {
       if (!user) {

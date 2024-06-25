@@ -1,4 +1,4 @@
-const jwtSecret = 'your_jwt_secret;' // has to be the same key used in JWTStrategy
+const jwtSecret = 'your_jwt_secret'; // has to be the same key used in JWTStrategy
 
 const jwt = require('jsonwebtoken'),
 passport = require('passport');
@@ -10,7 +10,7 @@ let generateJWTToken = (user) => { // creates a JWT based on username and passwo
         subject: user.Username, // username encoded in the JWT
         expiresIn: '7d', // specifies the token will expire in  7 days
         algorithm: 'HS256' // algorithm used to encode the values of the JWT
-    })
+    });
 }
 
 module.exports = (router) => { 

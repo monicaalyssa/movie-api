@@ -28,8 +28,10 @@ passport.use(
                 return callback(null, user);
             })
             .catch((error) => {
-                console.error(error);
-                return callback(error);
+                if (error) {
+                    console.error(error);
+                    return callback(error);
+                }
             })
         }
     )

@@ -6,7 +6,10 @@ const express = require("express"),
   morgan = require("morgan"),
   uuid = require("uuid"),
   mongoose = require("mongoose"),
-  Models = require("./models.js");
+  Models = require("./models.js"),
+  cors = require("cors");
+
+app.use(cors());
 
 const app = express();
 const Movies = Models.Movie;

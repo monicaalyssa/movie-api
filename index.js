@@ -9,8 +9,6 @@ const express = require("express"),
   Models = require("./models.js"),
   cors = require("cors");
 
-app.use(cors());
-
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -28,6 +26,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
 // lines for body-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 // imports auth.js
 let auth = require("./auth")(app);

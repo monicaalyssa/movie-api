@@ -43,7 +43,7 @@ Interacts with the Mongo database to define schemas, validate structures of movi
 Works alongside JWT authentication for authentication and authorization between endpoints on the web server. 
 
 ### Bcrypt
-Secure login authentication to hash user's usernames and password.
+Secure login authentication to hash users' passwords for sceure authentication.
 
 ##
 [Back to top](#top)

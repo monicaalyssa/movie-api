@@ -143,6 +143,7 @@ app.get(
 
 // adds a new user
 app.post("/users", async (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists
     .then((user) => {
       if (user) {
@@ -152,7 +153,7 @@ app.post("/users", async (req, res) => {
         // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })

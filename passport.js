@@ -8,8 +8,8 @@ let Users = Models.User,
   ExtractJWT = passportJWT.ExtractJwt;
 
 passport.use(
-  new LocalStrategy /* passport strategy that takes a username and password from the
-        req body and uses Mongoose to check the db for a user with the same username*/(
+  new LocalStrategy( /* passport strategy that takes a username and password from the
+  req body and uses Mongoose to check the db for a user with the same username */
     {
       usernameField: "Username",
       passwordField: "Password"
@@ -23,6 +23,10 @@ passport.use(
             return callback(null, false, {
               message: "Incorrect username or password."
             });
+          }
+          if (!user.validatePassword(password)) {
+            console.log("Incorrect password");
+            return callback(null, false, { message: "Incorrect password." });
           }
           console.log("Finished");
           return callback(null, user);

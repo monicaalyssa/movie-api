@@ -12,6 +12,7 @@ const express = require("express"),
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
+const { check, validationResult } = require("express-validator");
 
 mongoose.connect("mongodb://localhost:27017/test", {
   useNewUrlParser: true,
@@ -142,37 +143,50 @@ app.get(
 );
 
 // adds a new user
-app.post("/users", async (req, res) => {
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists
-    .then((user) => {
-      if (user) {
-        // if the user does exist then it lets the client know it already exists
-        return res.status(400).send(req.body.Username + " already exists");
-      } else {
-        // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
-        Users.create({
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-        })
-          .then((user) => {
-            res.status(201).json(user);
-          }) /* after the document is created a callback function takes the document as a parameter, 
+app.post(
+  "/users",
+  [ check("Username", "Username is required").isLength({ min: 5 }), // minimum value of 5 characters are only allowed
+    check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(), // chained methods meaning, is not empty
+    check("Email", "Email does not appear to be valid").isEmail()
+  ],
+  async (req, res) => {
+    let errors = validationResult(req); // check the validation object for errors
+    if (!errors.isEmpty()) { // if errors variable comes back not empty, let the user know which errors, and the rest of the code will not execute
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username }) // findOne checks if a user with the username provided already exists
+      .then((user) => {
+        if (user) {
+          // if the user does exist then it lets the client know it already exists
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          // if the user doesn't exist the create command is used on the model to execute this operation on MongoDB
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+            .then((user) => {
+              res.status(201).json(user);
+            }) /* after the document is created a callback function takes the document as a parameter, 
       sending back a response to the client containing a status code and the document */
-          .catch((error) => {
-            // error function in case your command runs an error
-            console.error(error);
-            res.status(500).send("Error" + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error" + error);
-    });
-});
+            .catch((error) => {
+              // error function in case your command runs an error
+              console.error(error);
+              res.status(500).send("Error" + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error" + error);
+      });
+  }
+);
 
 // updates a user with a certain username
 app.put(
@@ -198,9 +212,11 @@ app.put(
           Birthday: req.body.Birthday
         }
       },
-      { new: true }) /* this line makes sure the updated document is returned, it specifies that 
+      { new: true }
+    ) /* this line makes sure the updated document is returned, it specifies that 
 in the proceeding callback you want the document that was just udpated */
-      .then((updatedUser) => { // the then() method accepts the returned document
+      .then((updatedUser) => {
+        // the then() method accepts the returned document
         if (updatedUser) {
           res.send(updatedUser.Username + "'s account has been updated"); // sends the document as a JSON response to the client
         } else {
@@ -263,7 +279,8 @@ app.delete(
       return res.status(400).send("Permission denied");
     }
 
-    try { // check if the movie exists, if it does assign it to a variable
+    try {
+      // check if the movie exists, if it does assign it to a variable
       const favMovie = await Movies.findById(req.params.MovieID);
       if (!favMovie) {
         return res.status(404).send("Movie does not exist");

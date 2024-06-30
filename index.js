@@ -344,6 +344,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Webpage not fonud");
 });
 
-app.listen(8082, () => {
-  console.log("My first Node test server is running on Port 8082");
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });

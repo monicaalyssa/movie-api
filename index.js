@@ -1,6 +1,6 @@
 // variable declaration
-const bodyParser = require("body-parser");
-const express = require("express"),
+const bodyParser = require("body-parser"),
+  express = require("express"),
   path = require("path"),
   fs = require("fs"),
   morgan = require("morgan"),
@@ -26,8 +26,7 @@ mongoose.connect( process.env.CONNECTION_URI, {
 
 // creates a writable stream (data is written into a file, in this case log.txt) using the fs module
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
-  flags: "a"
-}); // the a flag opens the file for writing & positions the stream at the end of the file
+  flags: "a"}); // the a flag opens the file for writing & positions the stream at the end of the file
 
 // lines for body-parser
 app.use(express.json());
@@ -119,9 +118,8 @@ app.get(
   async (req, res) => {
     await Users.find(
       {},
-      { _id: 0, Username: 1, Favorites: 1 }
-    ) /* {} fetches all users, and _id: 0 exludes the id from the res,
-  and using the number 1 includes any of the related fields */
+      { _id: 0, Username: 1, Favorites: 1 }) /* {} fetches all users, and _id: 0 exludes the id from the res,
+        and using the number 1 includes any of the related fields */
       .then((users) => {
         res.status(200).json(users);
       })
@@ -197,9 +195,8 @@ app.post(
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    /* condition to checek the username in the request body matches the one in the parameter
-  so users can ONLY update their information and not others */
+  async (req, res) => { /* condition to checek the username in the request body matches the one in the parameter
+      so users can ONLY update their information and not others */
     if (req.user.Username !== req.params.Username) {
       // req.user.Username is the username extracted from the JWT payload
       return res.status(400).send("Permission denied");
@@ -208,22 +205,20 @@ app.put(
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $set: {
-          /* $set specifies which fields in the user document you're updating, the new values are 
-      extracted from the reqest body */
+        $set: { /* $set specifies which fields in the user document you're updating, the new values are 
+            extracted from the reqest body */
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
       },
-      { new: true }
-    ) /* this line makes sure the updated document is returned, it specifies that 
-in the proceeding callback you want the document that was just udpated */
+      { new: true }) /* this line makes sure the updated document is returned, it specifies that 
+        in the proceeding callback you want the document that was just udpated */
       .then((updatedUser) => {
         // the then() method accepts the returned document
         if (updatedUser) {
-          res.send(updatedUser.Username + "'s account has been updated"); // sends the document as a JSON response to the client
+          res.send(updatedUser.Username + "'s account has been updated");
         } else {
           res.send(updatedUser.Username + "'s account has not be updated");
         }

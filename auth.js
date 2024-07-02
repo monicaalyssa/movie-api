@@ -14,8 +14,7 @@ let generateJWTToken = (user) => { // creates a JWT based on username and passwo
 };
 
 module.exports = (router) => {
-  // endpoint for registered users to log in
-  router.post("/login", (req, res) => {
+  router.post("/login", (req, res) => { // endpoint for registered users to log in
     passport.authenticate("local", { session: false }, (error, user, info) => {
       if (error || !user) {
         return res.status(400).json({

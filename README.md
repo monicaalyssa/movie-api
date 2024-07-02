@@ -28,22 +28,25 @@ git clone https://github.com/monicaalyssa/movie-api
 
 ## Technologies & Dependencies
 ### Frontend
-<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" width="60"/></td><td><strong>React:</strong> React is a JavaScript library for building responsive user interfaces with a component-based approach, optimizing performance through virtual DOM for seamless updates and rendering.</td></tr></tr></table>
+<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" width="60"/></td><td><strong>React:</strong> A JavaScript library for building responsive user interfaces with a component-based approach, optimizing performance through virtual DOM for seamless updates and rendering.</td></tr></tr></table>
 
 ### Backend
-<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" width="60"/></td><td><strong>Node.js:</strong> A server-side JavaScript runtime environment that facilitates scalable and efficient backend development for building real-time web applications and APIs.</td></tr><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" width="60"/></td><td><strong>Express.js:</strong> Simplifies the creation of APIs and web servers, offering middleware to handle requests and routes to map HTTP methods and URLs.</td></tr></table>
+<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" width="60"/></td><td><strong>Node.js:</strong> The runtime environment for the PopcornPal project, handling HTTP requests and routing clients to the appropriate API endpoints.</td></tr><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" width="60"/></td><td><strong>Express.js:</strong> Works alongside Node.js to handle HTTP requests, define routes, and implement middleware to manage various aspects of the project.</td></tr></table>
 
 ### Database
-<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-plain-wordmark.svg" width="60"/></td><td><strong>MongoDB:</strong> An open-source, NoSQL database management system that provides high performance, high availability, and easy scalability.</td></tr></table>
+<table><tr><td><img src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-plain-wordmark.svg" width="60"/></td><td><strong>MongoDB:</strong> The database management system for handling the storage and retrieval of data related to movies and users.</td></tr></table>
 
 ### Mongoose
-Interacts with the Mongo database to define schemas, validate structures of movie documents, and implement middleware.
+Interacts with the MongoDB database to define schemas, validate structures of movie and user documents, and employs query methods to locate matching records.
+
+### JWT/JSON Web Token
+Generates tokens at user login for secure, stateless authorization.
 
 ### Passport.js
-Works alongside JWT authentication for authentication and authorization between endpoints on the web server. 
+Works alongside JWT authentication to handle authentication and authorization between endpoints on the web server.
 
 ### Bcrypt
-Secure login authentication to hash users' passwords for sceure authentication.
+Enables secure login authentication by hashing users' passwords for enhanced security.
 
 ##
 [Back to top](#top)

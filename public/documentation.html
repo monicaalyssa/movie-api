@@ -71,7 +71,7 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/movies/genre/[genrename]</td>
+            <td>/genre/[genrename]</td>
             <td>GET</td>
             <td>Get data about a genre</td>
             <td>None</td>
@@ -89,7 +89,7 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/movies/directors/[directorname]</td>
+            <td>/directors/[directorname]</td>
             <td>GET</td>
             <td>Get data about a director</td>
             <td>None</td>
@@ -140,14 +140,33 @@
         <!------------------------------------------------------------------------------------------------->
 
         <tr>
-            <td>/users/[username]</td>
-            <td>PUT</td>
-            <td>Updates an existing users username</td>
-            <td> A JSON object holding data about the name, password, email, or birthday the user wants to update
+            <td>/login</td>
+            <td>POST</td>
+            <td>User login using a valid username and password</td>
+            <td> A JSON object holding the username and password
                 <br><span class="code-bkg">
                     <span class="bluebrackets">{</span>
                     "Username": "Mary100",
                     "Password": "updatedpassword100"
+                    <span class="bluebrackets">}</span>
+                    </span>
+            </td>
+            <td>A JSON object returning the user's account data, including a token</td>
+        </tr>
+
+        <!------------------------------------------------------------------------------------------------->
+
+        <tr>
+            <td>/users/[username]</td>
+            <td>PUT</td>
+            <td>Updates an existing users username, password, email, or birthday</td>
+            <td> A JSON object holding data about the name, password, email, or birthday the user wants to update
+                <br><span class="code-bkg">
+                    <span class="bluebrackets">{</span>
+                    "Username": "Mary100",
+                    "Password": "updatedpassword100",
+                    "Email": "mary99@exmaple.com",
+                    "Birthday": "03/20/97"
                     <span class="bluebrackets">}</span>
                     </span>
             </td>
@@ -161,7 +180,7 @@
             <td>POST</td>
             <td>Adds a movie to users favorite movies list</td>
             <td>None</td>
-            <td>A text message indicating whether the movie was successfully added to the users favorites list</td>
+            <td>A text message stating the movie title that was added to the users favorites list</td>
         </tr>
 
         <!------------------------------------------------------------------------------------------------->
@@ -171,7 +190,7 @@
             <td>DELETE</td>
             <td>Deletes a movie from users favorite movies list</td>
             <td>None</td>
-            <td>A text message indicating whether the movie was successfully deleted from the users favorites list</td>
+            <td>A text message stating the movie title that was deleted from the users favorites list</td>
         </tr>
 
         <!------------------------------------------------------------------------------------------------->

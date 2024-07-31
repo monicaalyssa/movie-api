@@ -65,7 +65,7 @@ app.get("/movies", async (req, res) => {
 
 // gets a specific movie
 app.get("/movies/:Title", async (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ _id: req.params.Title })
     .then((movie) => {
       if (movie) {
         res.status(201).json(movie);

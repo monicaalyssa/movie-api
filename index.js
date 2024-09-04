@@ -55,8 +55,12 @@ app.use(cors({
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Authorization', 'Content-Type'],
+  credentials: true,
 }));
+
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/documentation.html"));

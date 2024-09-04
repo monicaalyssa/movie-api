@@ -47,7 +47,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 // takes specific pathname "/" requests from the user and uses express to route them to any file located in the public folder
 app.use(express.static("public"));
 
-let allowedOrigins = ['http://localhost:1234', 'https://popcornpal.netlify.app/'];
+let allowedOrigins = ['http://localhost:1234', 'https://popcornpal.netlify.app/', 'https://popcornpal-32d285ffbdf8.herokuapp.com/'];
 
 app.use(cors({
   origin: (origin, callback) => {

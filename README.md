@@ -12,3 +12,44 @@ git clone https://github.com/monicaalyssa/movie-api
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 5. Open your browser and visit: `http://localhost:8082`
+
+## REST API Endpoints
+
+Base URL: https://popcornpal-32d285ffbdf8.herokuapp.com/
+
+#### Existing movie data
+
+<details>
+ <summary><code>GET</code> <code><b>/movies</b></code> <code>(gets a list of all movies)</code></summary>
+
+##### Parameters
+
+> | None |
+|---------------|
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `201`         | `application/json; charset=utf-8`        | JSON array of objects 
+
+</details>
+
+<details>
+ <summary><code>GET</code> <code><b>/movies/{uuid}</b></code> <code>(gets data about a specific movie by id)</code></summary>
+
+##### Parameters
+
+> | name   |  type      | data type      | description                                          |
+> |--------|------------|----------------|------------------------------------------------------|
+> | `uuid` |  required  | string         | The specific movie id                 |
+
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `201`         | `application/json; charset=utf-8`        | JSON object 
+> | `500`         | `text/html; charset=utf-8`        | `"Error: " + message`
+
+</details>                                                  |

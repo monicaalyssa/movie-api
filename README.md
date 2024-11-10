@@ -13,7 +13,7 @@ git clone https://github.com/monicaalyssa/movie-api
 4. Start the development server: `npm start`
 5. Open your browser and visit: `http://localhost:8082`
 
-## REST API Endpoints
+## API Endpoints
 
 Base URL: https://popcornpal-32d285ffbdf8.herokuapp.com/
 
@@ -25,7 +25,7 @@ Base URL: https://popcornpal-32d285ffbdf8.herokuapp.com/
 ##### Parameters
 
 > | None |
-|---------------|
+> |---------------|
 
 ##### Responses
 
@@ -40,9 +40,9 @@ Base URL: https://popcornpal-32d285ffbdf8.herokuapp.com/
 
 ##### Parameters
 
-> | name   |  type      | data type      | description                                          |
-> |--------|------------|----------------|------------------------------------------------------|
-> | `uuid` |  required  | string         | The specific movie id                 |
+> | Name   | Data Type      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `uuid` | string         | The specific movie id                 |
 
 
 ##### Responses
@@ -52,4 +52,4 @@ Base URL: https://popcornpal-32d285ffbdf8.herokuapp.com/
 > | `201`         | `application/json; charset=utf-8`        | JSON object 
 > | `500`         | `text/html; charset=utf-8`        | `"Error: " + message`
 
-</details>                                                  |
+</details>                                                  

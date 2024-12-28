@@ -34,13 +34,13 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 
 > | HTTP Code     | Content-Type                      | Response                                                            |
 > |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `201`         | `application/json; charset=utf-8`        | JSON array of objects 
+> | `200`         | `application/json; charset=utf-8`        | JSON array of objects 
 
 </details>
 
 <details>
  <summary><code>GET</code> <code><b>/movies/{uuid}</b></code> <code>(gets data about a specific movie by id)</code></summary>
-
+ 
 ##### Parameters
 
 > | Name   | Data Type      | Description                                          |
@@ -52,7 +52,93 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 
 > | HTTP Code     | Content-Type                      | Response                                                            |
 > |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `201`         | `application/json; charset=utf-8`        | JSON object 
+> | `200`         | `application/json; charset=utf-8`        | JSON object 
 > | `500`         | `text/html; charset=utf-8`        | `"Error: " + message`
 
-</details>                                                  
+##### Example Request
+`https://popcornpal-32d285ffbdf8.herokuapp.com/movies/666f4ac82ea46717e439e608`
+
+##### Example Response (200 OK)
+```json
+{
+  "Genre": {
+    "Name": "Mystery",
+    "Description": "Mystery involves a mysterious death or a crime to be solved."
+  },
+  "Director": {
+    "Name": "Sam Esmail",
+    "Bio": "Sam Esmail is an American producer and writer, with 5 film award wins.",
+    "Birthdate": "1977-09-17T00:00:00.000Z"
+  },
+  "_id": "666f4ac82ea46717e439e608",
+  "Title": "Leave the World Behind",
+  "Description": "A family's getaway to a luxurious rental home takes an ominous turn when a cyberattack knocks out their devices, and two strangers appear at their door.",
+  "ImageURL": "https://m.media-amazon.com/images/M/MV5BMTUzM2I3NDEtMjNhYi00NTQ0LThmZDItZTMyMzM2MjJmZGRjXkEyXkFqcGdeQXVyMTU3NDU4MDg2._V1_.jpg",
+  "Featured": false,
+  "BannerURL": "https://stadt-bremerhaven.de/wp-content/uploads/2023/10/Leave-the-world-behind.jpg",
+  "Duration": "2h20m"
+}
+```
+
+</details> 
+
+<details>
+ <summary><code>GET</code> <code><b>/genre/{genrename}</b></code> <code>(gets data about a specific genre by name)</code></summary>
+
+##### Parameters
+
+> | Name   | Data Type      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `genrename` | string         | The name of the genre (case sensitive)                 |
+
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json; charset=utf-8`        | JSON object 
+> | `500`         | `text/html; charset=utf-8`        | `genrename + "genre not found"`
+
+##### Example Request
+`https://popcornpal-32d285ffbdf8.herokuapp.com/genre/Fantasy`
+
+##### Example Response (200 OK)
+```json
+{
+  "Name": "Fantasy",
+  "Description": "Fantasy stories are set in a faraway or fictional universe and are usually inspired by mythology and folklore."
+}
+```
+
+</details>
+
+<details>
+ <summary><code>GET</code> <code><b>/directors/{directorname}</b></code> <code>(gets data about a specific director by name)</code></summary>
+
+##### Parameters
+
+> | Name   | Data Type      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `directorname` | string         | The name of the director (case sensitive)                 |
+
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json; charset=utf-8`        | JSON object 
+> | `500`         | `text/html; charset=utf-8`        | `directorname + " not found"`
+
+##### Example Request
+`https://popcornpal-32d285ffbdf8.herokuapp.com/directors/James Cameron`
+
+##### Example Response (200 OK)
+```json
+{
+  "Name": "James Cameron",
+  "Bio": "James Cameron is a Canadian filmmaker known for his expansive vision and innovative special-effects films, most notably Titanic (1997), and Avatar (2009).",
+  "Birthdate": "1954-08-16T00:00:00.000Z"
+}
+```
+
+</details>   

@@ -199,7 +199,7 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 
 > | HTTP Code     | Content-Type                      | Response                                                            |
 > |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `200`         | `application/json; charset=utf-8`        | JSON object 
+> | `200`         | `application/json; charset=utf-8`        | JSON object of objects
 > | `401`         | `text/html; charset=utf-8`        | `"Invalid username or password"`
 
 ##### Example Request

@@ -97,7 +97,7 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 > | HTTP Code     | Content-Type                      | Response                                                            |
 > |---------------|-----------------------------------|---------------------------------------------------------------------|
 > | `200`         | `application/json; charset=utf-8`        | JSON object 
-> | `500`         | `text/html; charset=utf-8`        | `genrename + "genre not found"`
+> | `404`         | `text/html; charset=utf-8`        | `genrename + "genre not found"`
 
 ##### Example Request
 `https://popcornpal-32d285ffbdf8.herokuapp.com/genre/Fantasy`
@@ -127,7 +127,7 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 > | HTTP Code     | Content-Type                      | Response                                                            |
 > |---------------|-----------------------------------|---------------------------------------------------------------------|
 > | `200`         | `application/json; charset=utf-8`        | JSON object 
-> | `500`         | `text/html; charset=utf-8`        | `directorname + " not found"`
+> | `404`         | `text/html; charset=utf-8`        | `directorname + " not found"`
 
 ##### Example Request
 `https://popcornpal-32d285ffbdf8.herokuapp.com/directors/James Cameron`
@@ -141,4 +141,102 @@ https://popcornpal-32d285ffbdf8.herokuapp.com/
 }
 ```
 
-</details>   
+</details>
+
+<details>
+ <summary><code>GET</code> <code><b>/users/{username}</b></code> <code>(gets data about a specific user)</code></summary>
+
+##### Parameters
+
+> | Name   | Data Type      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `username` | string         | Users username                 |
+
+##### Auth Parameters
+
+> | Auth Type   | Value      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `Bearer Token` | string         | JWT Token                 |
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json; charset=utf-8`        | JSON object
+> | `404`         | `text/html; charset=utf-8`        | `"User with username" + username + " not found"`
+> | `401`         | `text/plain; charset=utf-8`        | `"Unauthorized"`
+
+##### Example Request
+`https://popcornpal-32d285ffbdf8.herokuapp.com/users/johndoe`
+
+##### Example Response (200 OK)
+```json
+{
+  "_id": "6262a50dc4d247589f699b38ab9204f4",
+  "Username": "johndoe",
+  "Password": "$2b$12$q3lFXBytAOfnH5mXYll.AOH6rnNmXzbEmtsK61jUONaCW02wKz11W",
+  "Email": "johndoe@exmaple.com",
+  "Birthday": "1997-03-20T00:00:00.000Z",
+  "Favorites": [],
+  "__v": 0
+},
+```
+
+</details>
+
+<details>
+ <summary><code>POST</code> <code><b>/login</b></code> <code>(authenticates a user and returns a JWT token)</code></summary>
+
+##### Query Parameters
+
+> | Key   | Value      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `Username` | string         | User username                 |
+> | `Password` | string         | User password                 |
+
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json; charset=utf-8`        | JSON object 
+> | `401`         | `text/html; charset=utf-8`        | `"Invalid username or password"`
+
+##### Example Request
+`https://popcornpal-32d285ffbdf8.herokuapp.com/login?Username=johndoe&Password=password123`
+
+##### Example Response (200 OK)
+
+```json
+{
+    "user": {
+        "_id": "6262a50dc4d247589f699b38ab9204f4",
+        "Username": "johndoe",
+        "Password": "$2b$12$q3lFXBytAOfnH5mXYll.AOH6rnNmXzbEmtsK61jUONaCW02wKz11W",
+        "Email": "johndoe@exmaple.com",
+        "Birthday": "1997-03-20T00:00:00.000Z",
+        "Favorites": [],
+        "__v": 0
+    },
+    "token": "Lmi97X7rSYyEVywRuee2sYlODgI0W7pFpAscfOPggAuwe6CaCi7WumymeBzH8bUm8JS9TKu4fD88VB42E1HO9Qe8fiLOJbfPtFq1taGtdV4rzoCxZ4L3AdEPwVexWSGAESVjIRRlCc7e84ChB5V5i19iZmGtulGfwXTQ-rrihSqU0-p4CsMXfommD79Qqehtgv-6JlzZcILXc-WOsSBkSCVMoTW5p6ppVPZH"
+}
+```
+</details>
+
+<details>
+ <summary><code>GET</code> <code><b>/users</b></code> <code>(gets a list of all users and their favorite movies)</code></summary>
+
+##### Auth Parameters
+
+> | Auth Type   | Value      | Description                                          |
+> |--------|----------------|------------------------------------------------------|
+> | `Bearer Token` | string         | JWT Token                 |
+
+##### Responses
+
+> | HTTP Code     | Content-Type                      | Response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json; charset=utf-8`        | JSON array of objects
+
+</details>
+

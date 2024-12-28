@@ -154,9 +154,7 @@ app.get(
         if (user) {
           res.status(200).json(user);
         } else {
-          res.status(404).json({
-            message: `User with username '${req.params.Username}' not found`
-          });
+          res.status(404).send(`User with username '${req.params.Username}' not found`);
         }
       })
       .catch((err) => {

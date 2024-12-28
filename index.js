@@ -133,7 +133,7 @@ app.get(
   async (req, res) => {
     await Users.find(
       {},
-      { _id: 0, Username: 1, Favorites: 1 }) /* {} fetches all users, and _id: 0 exludes the id from the res,
+      { _id: 0, Username: 1, Favorites: 1 }) /* {} fetches all users, and _id: 0 excludes the id from the res,
         and using the number 1 includes any of the related fields */
       .then((users) => {
         res.status(200).json(users);
@@ -148,10 +148,16 @@ app.get(
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
+  async (req, res) => {    
     await Users.findOne({ Username: req.params.Username })
       .then((user) => {
-        res.json(user);
+        if (user) {
+          res.status(200).json(user);
+        } else {
+          res.status(404).json({
+            message: `User with username '${req.params.Username}' not found`
+          });
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -210,7 +216,7 @@ app.post(
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
-  async (req, res) => { /* condition to checek the username in the request body matches the one in the parameter
+  async (req, res) => { /* condition to check the username in the request body matches the one in the parameter
       so users can ONLY update their information and not others */
     if (req.user.Username !== req.params.Username) {
       // req.user.Username is the username extracted from the JWT payload

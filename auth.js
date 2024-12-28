@@ -17,7 +17,7 @@ module.exports = (router) => {
   router.post("/login", (req, res) => { // endpoint for registered users to log in
     passport.authenticate("local", { session: false }, (error, user, info) => {
       if (error || !user) {
-        return res.status(400).json({
+        return res.status(401).json({
           message: "Invalid username or password",
           user: user
         });

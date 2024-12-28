@@ -218,14 +218,14 @@ app.put(
       so users can ONLY update their information and not others */
     if (req.user.Username !== req.params.Username) {
       // req.user.Username is the username extracted from the JWT payload
-      return res.status(400).send("Permission denied");
+      return res.status(403).send("Permission denied");
     }
 
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: { /* $set specifies which fields in the user document you're updating, the new values are 
-            extracted from the reqest body */
+            extracted from the request body */
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
@@ -233,13 +233,13 @@ app.put(
         }
       },
       { new: true }) /* this line makes sure the updated document is returned, it specifies that 
-        in the proceeding callback you want the document that was just udpated */
+        in the proceeding callback you want the document that was just updated */
       .then((updatedUser) => {
         // the then() method accepts the returned document
         if (updatedUser) {
           res.send(updatedUser.Username + "'s account has been updated");
         } else {
-          res.send(updatedUser.Username + "'s account has not be updated");
+          res.status(400).send(updatedUser.Username + "'s account has not be updated");
         }
       })
       .catch((err) => {
@@ -255,7 +255,7 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
+      return res.status(403).send("Permission denied");
     }
 
     try {
@@ -295,7 +295,7 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
+      return res.status(403).send("Permission denied");
     }
 
     try {
@@ -339,7 +339,7 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
+      return res.status(403).send("Permission denied");
     }
 
     await Users.findOneAndDelete({ Username: req.params.Username })
@@ -360,7 +360,7 @@ app.delete(
 // catches any errors regarding res responses to the user
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send("Webpage not fonud");
+  res.status(500).send("Webpage not found");
 });
 
 const port = process.env.PORT || 8080;

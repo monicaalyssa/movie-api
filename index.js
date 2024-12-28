@@ -70,7 +70,7 @@ app.get("/", (req, res) => {
 app.get("/movies", async (req, res) => {
   Movies.find()
     .then((movies) => {
-      res.status(201).json(movies);
+      res.status(200).json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -83,9 +83,9 @@ app.get("/movies/:Title", async (req, res) => {
   Movies.findOne({ _id: req.params.Title })
     .then((movie) => {
       if (movie) {
-        res.status(201).json(movie);
+        res.status(200).json(movie);
       } else {
-        res.status(400).send(req.params.Title + " not found");
+        res.status(404).send(req.params.Title + " not found");
       }
     })
     .catch((err) => {
@@ -99,9 +99,9 @@ app.get("/genre/:Genre", async (req, res) => {
   Movies.findOne({ "Genre.Name": req.params.Genre })
     .then((genre) => {
       if (genre) {
-        res.json(genre.Genre);
+        res.status(200).json(genre.Genre);
       } else {
-        res.send(req.params.Genre + " genre not found");
+        res.status(404).send(req.params.Genre + " genre not found");
       }
     })
     .catch((err) => {
@@ -115,9 +115,9 @@ app.get("/directors/:Director", async (req, res) => {
   Movies.findOne({ "Director.Name": req.params.Director })
     .then((director) => {
       if (director) {
-        res.json(director.Director);
+        res.status(200).json(director.Director);
       } else {
-        res.send(req.params.Director + " not found");
+        res.status(404).send(req.params.Director + " not found");
       }
     })
     .catch((err) => {
